@@ -1,4 +1,4 @@
-import {PrismaClient} from '@prisma/client';
+import {Prisma, PrismaClient} from '@prisma/client';
 import Field from '../model/Field';
 
 const prisma = new PrismaClient();
@@ -16,9 +16,15 @@ export async function addField(f: Field){
                 fieldImage2: f.fieldImage2
             }
         })
-        console.log('Field Added :',newField)
+        console.log('Field Added store:',newField)
+        console.log("Field Added successfully");
     }catch(err) {
-        console.log("error adding Field", err);
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            if (err.code === 'P2002') {
+                throw new Error('A field with this ID already exists.');
+            }
+        }
+        throw err;
     }
 }
 

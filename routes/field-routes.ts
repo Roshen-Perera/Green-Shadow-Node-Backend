@@ -12,7 +12,11 @@ router.post("/add", async(req, res) => {
         res.send('Field Added')
     }catch(err){
         console.log("error adding field", err);
-        res.status(400).send("error adding field");
+        if (err.message === 'A field with this ID already exists.') {
+            res.status(400).send(err.message);
+        } else {
+            res.status(500).send("An error occurred while adding the field.");
+        }
     }
 })
 
