@@ -1,4 +1,4 @@
-export default class Crops {
+export default class Crop {
     cropId!: string;
     cropName!: string;
     cropScientificName!: string;
