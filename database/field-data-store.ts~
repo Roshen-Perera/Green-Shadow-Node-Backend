@@ -55,7 +55,7 @@ export async function getAllFields(){
 
 export async function getField(fieldId: string){
     try{
-        return await prisma.field.findUnique({
+        return await prisma.field.findFirst({
             where: {fieldId: fieldId}
         })
     }catch(err){
