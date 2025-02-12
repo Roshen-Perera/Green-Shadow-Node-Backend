@@ -61,16 +61,10 @@ router.get("/get/:fieldId", async (req, res) => {
     try{
         const field = await getField(id);
         if(field === null){
-            res.status(404).send('The field with this ID doesnt exists');
+            res.status(400).send('The field with this ID doesnt exists');
         }
-        res.json(field);
     }catch(err){
         console.log("error getting field", err);
-        if(err.message === 'The field with this ID doesnt exists'){
-            res.status(404).send(err.message);
-        } else {
-            res.status(500).send("An error occurred while getting the field.");
-        }
     }
 })
 

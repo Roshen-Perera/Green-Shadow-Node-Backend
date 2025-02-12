@@ -60,12 +60,6 @@ export async function getField(fieldId: string){
         })
     }catch(err){
         console.log("error getting Field", err);
-        if(err instanceof Prisma.PrismaClientKnownRequestError){
-            if(err.code === 'P2025'){
-                throw new Error("The field with this ID doesnt exists");
-            }
-        }
-        throw err;
     }
 }
 
