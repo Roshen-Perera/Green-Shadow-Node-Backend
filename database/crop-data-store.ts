@@ -61,12 +61,6 @@ export async function getCrop(cropId: string){
         })
     }catch(err){
         console.log("error getting Crop", err);
-        if(err instanceof Prisma.PrismaClientKnownRequestError){
-            if(err.code === 'P2025'){
-                throw new Error("The crop with this ID doesnt exists");
-            }
-        }
-        throw err;
     }
 }
 

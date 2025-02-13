@@ -63,14 +63,8 @@ router.get("/get/:cropId", async (req, res) => {
         if(crop === null){
             res.status(404).send('The crop with this ID doesnt exists');
         }
-        res.json(crop);
     }catch(err){
         console.log("error getting crop", err);
-        if(err.message === 'The crop with this ID doesnt exists'){
-            res.status(404).send(err.message);
-        } else {
-            res.status(500).send("An error occurred while getting the crop.");
-        }
     }
 })
 

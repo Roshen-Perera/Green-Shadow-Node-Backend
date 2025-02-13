@@ -14,12 +14,14 @@ datasource db {
 }
 
 model Field {
-  fieldId       String @id
+  fieldId       String  @id
   fieldName     String
   fieldExtent   String
   fieldLocation String
   fieldImage1   String
   fieldImage2   String
+  Crop          Crop[]
+  Staff         Staff[]
 }
 
 model Crop {
@@ -29,6 +31,7 @@ model Crop {
   cropCategory       String
   cropSeason         String
   cropImage1         String
+  cropField          Field  @relation(fields: [cropFieldId], references: [fieldId])
   cropFieldId        String
 }
 
@@ -48,5 +51,6 @@ model Staff {
   contactNo    String
   email        String
   role         String
-  fieldCode    String
+  staffField   Field  @relation(fields: [staffFieldId], references: [fieldId])
+  staffFieldId String
 }
