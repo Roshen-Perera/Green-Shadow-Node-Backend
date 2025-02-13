@@ -24,7 +24,7 @@ export async function addStaff(s: Staff){
                 contactNo: s.contactNo,
                 email: s.email,
                 role: s.role,
-                fieldCode: s.fieldCode
+                staffFieldId: s.staffFieldId
             }
         })
         console.log('Staff Added store:', newStaff);
@@ -76,7 +76,7 @@ export async function updateStaff(staffId: string, s: Staff){
                 contactNo: s.contactNo,
                 email: s.email,
                 role: s.role,
-                fieldCode: s.fieldCode
+                fieldCode: s.staffFieldId
             }
         })
         console.log("Staff updated successfully", staffId);

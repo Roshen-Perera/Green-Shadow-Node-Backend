@@ -14,5 +14,5 @@ export default class Staff {
     contactNo!: string;
     email!: string;
     role!: string;
-    fieldCode!: string;
+    staffFieldId!: string;
 }
