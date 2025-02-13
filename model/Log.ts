@@ -1,5 +1,5 @@
 export default class Log {
-    logCode!: string;
+    logId!: string;
     logDate!: string;
     details!: string;
     observedImage!: string;

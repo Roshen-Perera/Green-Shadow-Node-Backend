@@ -22,6 +22,7 @@ model Field {
   fieldImage2   String
   Crop          Crop[]
   Staff         Staff[]
+  Log           Log[]
 }
 
 model Crop {
@@ -33,6 +34,7 @@ model Crop {
   cropImage1         String
   cropField          Field  @relation(fields: [cropFieldId], references: [fieldId])
   cropFieldId        String
+  Log                Log[]
 }
 
 model Staff {
@@ -53,4 +55,18 @@ model Staff {
   role         String
   staffField   Field  @relation(fields: [staffFieldId], references: [fieldId])
   staffFieldId String
+  Log          Log[]
+}
+
+model Log {
+  logId         String @id
+  logDate       String
+  details       String
+  observedImage String
+  logField      Field  @relation(fields: [logFieldId], references: [fieldId])
+  logFieldId    String
+  logCrop       Crop   @relation(fields: [logCropId], references: [cropId])
+  logCropId     String
+  logStaff      Staff  @relation(fields: [logStaffId], references: [staffId])
+  logStaffId    String
 }
