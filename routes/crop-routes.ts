@@ -4,8 +4,13 @@ import Crop from "../model/Crop";
 import {upload} from "../libraries/MulterConfig";
 const router = express.Router();
 
-router.post("/add",  upload.fields([{ name: 'fieldImage1', maxCount: 1 }]),async(req, res) => {
+router.post("/add",  upload.fields([{ name: 'cropImage1', maxCount: 1 }]),async(req, res) => {
     const crop: Crop = req.body;
+    const files = req.files as { [cropName: string]: Express.Multer.File[] };
+    const img1 = files['cropImage1']?.[0]?.buffer.toString('base64'); // Convert to base64
+
+    // Add image data to the fields object
+    crop.cropImage1 = img1 || '';
     console.log("Received Data", crop);
     try{
         const addedCrop = await addCrop(crop);
@@ -39,10 +44,16 @@ router.delete("/delete/:cropId", async (req, res) => {
 })
 
 
-router.put("/update/:cropId",async (req, res) => {
+router.put("/update/:cropId", upload.fields([{ name: 'cropImage1', maxCount: 1 }]), async (req, res) => {
     console.log("Updating crop...")
     const id:string = req.params.cropId;
     const crop : Crop = req.body;
+    const files = req.files as { [cropName: string]: Express.Multer.File[] };
+    const img1 = files['cropImage1']?.[0]?.buffer.toString('base64'); // Convert to base64
+
+    // Add image data to the fields object
+    crop.cropImage1 = img1 || '';
+    console.log("Received Data", crop);
     try{
         await updateCrop(id, crop);
         res.send('Crop Updated');
@@ -78,4 +89,5 @@ router.get("/get", async (req, res) => {
         console.log("error getting crops", err);
     }
 })
+
 export default router;

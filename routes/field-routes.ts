@@ -101,4 +101,15 @@ router.get("/get", async (req, res) => {
         console.log("error getting fields", err);
     }
 })
+
+router.get("/get", async (req, res) => {
+    console.log("Fetching all field IDs");
+    try{
+       const fields=  await getAllFields();
+       res.json(fields);
+    }catch(err){
+        console.log("error getting fields", err);
+    }
+})
+
 export default router;
