@@ -1,9 +1,10 @@
 import express from "express";
 import {addCrop, deleteCrop, getAllCrops, getCrop, updateCrop} from "../database/crop-data-store";
 import Crop from "../model/Crop";
+import {upload} from "../libraries/MulterConfig";
 const router = express.Router();
 
-router.post("/add", async(req, res) => {
+router.post("/add",  upload.fields([{ name: 'fieldImage1', maxCount: 1 }]),async(req, res) => {
     const crop: Crop = req.body;
     console.log("Received Data", crop);
     try{

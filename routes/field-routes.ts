@@ -1,10 +1,22 @@
-import express from "express";
 import {addField, deleteField, getAllFields, getField, updateField} from "../database/field-data-store";
 import Field from "../model/Field";
+import express from "express";
+import {upload} from "../libraries/MulterConfig";
+// @ts-ignore
+
 const router = express.Router();
 
-router.post("/add", async(req, res) => {
+
+router.post("/add", upload.fields([{ name: 'fieldImage1', maxCount: 1 }, { name: 'fieldImage2', maxCount: 1 },]), async(req, res) => {
     const field: Field = req.body;
+    // Access uploaded files
+    const files = req.files as { [fieldName: string]: Express.Multer.File[] };
+    const img1 = files['fieldImage1']?.[0]?.buffer.toString('base64'); // Convert to base64
+    const img2 = files['fieldImage2']?.[0]?.buffer.toString('base64'); // Convert to base64
+
+    // Add image data to the fields object
+    field.fieldImage1 = img1 || '';
+    field.fieldImage2 = img2 || '';
     console.log("Received Data", field);
     try{
         const addedField = await addField(field);
@@ -21,6 +33,7 @@ router.post("/add", async(req, res) => {
 })
 
 router.delete("/delete/:fieldId", async (req, res) => {
+
     console.log("Deleting field...");
     const id: string  = req.params.fieldId;
     try{
@@ -38,10 +51,20 @@ router.delete("/delete/:fieldId", async (req, res) => {
 })
 
 
-router.put("/update/:fieldId",async (req, res) => {
+router.put("/update/:fieldId", upload.fields([{ name: 'fieldImage1', maxCount: 1 }, { name: 'fieldImage2', maxCount: 1 },]), async (req, res) => {
+
     console.log("Updating field...")
     const id:string = req.params.fieldId;
     const field : Field = req.body;
+
+    const files = req.files as { [fieldName: string]: Express.Multer.File[] };
+    const img1 = files['fieldImage1']?.[0]?.buffer.toString('base64'); // Convert to base64
+    const img2 = files['fieldImage2']?.[0]?.buffer.toString('base64'); // Convert to base64
+
+    // Add image data to the fields object
+    field.fieldImage1 = img1 || '';
+    field.fieldImage2 = img2 || '';
+    console.log("Received Data", field);
     try{
         await updateField(id, field);
         res.send('Field Updated');
@@ -56,6 +79,7 @@ router.put("/update/:fieldId",async (req, res) => {
 })
 
 router.get("/get/:fieldId", async (req, res) => {
+
     console.log("Fetching field...");
     const id = req.params.fieldId;
     try{
