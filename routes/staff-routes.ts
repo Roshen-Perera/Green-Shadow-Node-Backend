@@ -1,17 +1,18 @@
-import express from "express";
 import {addStaff, deleteStaff, getAllStaffs, getStaff, updateStaff} from "../database/staff-data-store";
 import Staff from "../model/Staff";
+import express from "express";
 const router = express.Router();
 
 router.post("/add", async(req, res) => {
     const staff: Staff = req.body;
+
     console.log("Received Data", staff);
     try{
         const addedStaff = await addStaff(staff);
         console.log(addedStaff);
         res.send('Staff Added')
     }catch(err){
-        console.log("error adding staff", err);
+        console.log("error adding staff\n", err);
         if (err.message === 'A staff with this ID already exists.') {
             res.status(400).send(err.message);
         } else {
@@ -25,7 +26,6 @@ router.delete("/delete/:staffId", async (req, res) => {
     const id: string  = req.params.staffId;
     try{
         await deleteStaff(id);
-        console.log("Staff with id " + id +" deleted");
         res.send('Staff Deleted');
     }catch(err){
         console.log("error deleting staff", err);

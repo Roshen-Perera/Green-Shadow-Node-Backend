@@ -76,7 +76,7 @@ export async function updateStaff(staffId: string, s: Staff){
                 contactNo: s.contactNo,
                 email: s.email,
                 role: s.role,
-                fieldCode: s.staffFieldId
+                staffFieldId: s.staffFieldId
             }
         })
         console.log("Staff updated successfully", staffId);
