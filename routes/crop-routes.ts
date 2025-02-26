@@ -16,7 +16,7 @@ router.post("/add",  upload.fields([{ name: 'cropImage1', maxCount: 1 }]),async(
         const addedCrop = await addCrop(crop);
         console.log(addedCrop);
         res.send('Crop Added')
-    }catch(err){
+    }catch(err: any){
         console.log("error adding crop", err);
         if (err.message === 'A crop with this ID already exists.') {
             res.status(400).send(err.message);
@@ -33,10 +33,10 @@ router.delete("/delete/:cropId", async (req, res) => {
         await deleteCrop(id);
         console.log("Crop with id " + id +" deleted");
         res.send('Crop Deleted');
-    }catch(err){
-        console.log("error deleting crop", err);
-        if(err.message === 'The crop with this ID doesnt exists'){
-            res.status(404).send(err.message);
+    }catch(error: any){
+        console.log("error deleting crop", error);
+        if(error.message === 'The crop with this ID doesnt exists'){
+            res.status(404).send(error.message);
         } else {
             res.status(500).send("An error occurred while deleting the crop.");
         }
@@ -57,7 +57,7 @@ router.put("/update/:cropId", upload.fields([{ name: 'cropImage1', maxCount: 1 }
     try{
         await updateCrop(id, crop);
         res.send('Crop Updated');
-    }catch(err){
+    }catch(err: any){
         console.log("error updating crop", err);
         if(err.message === 'The crop with this ID doesnt exists'){
             res.status(404).send(err.message);

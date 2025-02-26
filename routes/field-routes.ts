@@ -22,7 +22,7 @@ router.post("/add", upload.fields([{ name: 'fieldImage1', maxCount: 1 }, { name:
         const addedField = await addField(field);
         console.log(addedField);
         res.send('Field Added')
-    }catch(err){
+    }catch(err: any){
         console.log("error adding field", err);
         if (err.message === 'A field with this ID already exists.') {
             res.status(400).send(err.message);
@@ -40,7 +40,7 @@ router.delete("/delete/:fieldId", async (req, res) => {
         await deleteField(id);
         console.log("Field with id " + id +" deleted");
         res.send('Field Deleted');
-    }catch(err){
+    }catch(err: any){
         console.log("error deleting field", err);
         if(err.message === 'The field with this ID doesnt exists'){
             res.status(404).send(err.message);
@@ -68,7 +68,7 @@ router.put("/update/:fieldId", upload.fields([{ name: 'fieldImage1', maxCount: 1
     try{
         await updateField(id, field);
         res.send('Field Updated');
-    }catch(err){
+    }catch(err: any){
         console.log("error updating field", err);
         if(err.message === 'The field with this ID doesnt exists'){
             res.status(404).send(err.message);

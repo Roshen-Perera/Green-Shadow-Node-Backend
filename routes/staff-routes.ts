@@ -11,7 +11,7 @@ router.post("/add", async(req, res) => {
         const addedStaff = await addStaff(staff);
         console.log(addedStaff);
         res.send('Staff Added')
-    }catch(err){
+    }catch(err: any){
         console.log("error adding staff\n", err);
         if (err.message === 'A staff with this ID already exists.') {
             res.status(400).send(err.message);
@@ -27,7 +27,7 @@ router.delete("/delete/:staffId", async (req, res) => {
     try{
         await deleteStaff(id);
         res.send('Staff Deleted');
-    }catch(err){
+    }catch(err: any){
         console.log("error deleting staff", err);
         if(err.message === 'The staff with this ID doesnt exists'){
             res.status(404).send(err.message);
@@ -45,7 +45,7 @@ router.put("/update/:staffId",async (req, res) => {
     try{
         await updateStaff(id, staff);
         res.send('Staff Updated');
-    }catch(err){
+    }catch(err: any){
         console.log("error updating staff", err);
         if(err.message === 'The staff with this ID doesnt exists'){
             res.status(404).send(err.message);
